@@ -1,0 +1,8 @@
+
+enumerate motionsoft members
+get members of a certain type? Active I would image?
+pull full memeber
+sync basic fields, name, address, phone, member since, active status, total annual revenue
+create reverse method to update motionsoft. I believe they dont offer this?
+see if hubspot has webhooks
+If they do, expose an endpoint to update motionsoft
