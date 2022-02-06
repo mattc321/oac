@@ -7,179 +7,179 @@ class MemberModel
     /**
      * @var string|null
      */
-    private $Acctnote;
+    public $Acctnote;
     /**
      * @var string|null
      */
-    private $Address1;
+    public $Address1;
     /**
      * @var string|null
      */
-    private $Address2;
+    public $Address2;
     /**
      * @var bool|null
      */
-    private $AutoBill;
+    public $AutoBill;
     /**
      * @var string|null
      */
-    private $Barcode;
+    public $Barcode;
     /**
      * @var string|null
      */
-    private $Birthday;
+    public $Birthday;
     /**
      * @var string|null
      */
-    private $City;
+    public $City;
     /**
      * @var string|null
      */
-    private $Company;
+    public $Company;
     /**
      * @var bool|null
      */
-    private $DoNotSendTextMessages;
+    public $DoNotSendTextMessages;
     /**
      * @var bool|null
      */
-    private $DoNotEmail;
+    public $DoNotEmail;
     /**
      * @var string|null
      */
-    private $DriveLic;
+    public $DriveLic;
     /**
      * @var string|null
      */
-    private $EnteredDate;
+    public $EnteredDate;
     /**
      * @var string|null
      */
-    private $Email;
+    public $Email;
     /**
      * @var string|null
      */
-    private $Emercon;
+    public $Emercon;
     /**
      * @var string|null
      */
-    private $EmerExt;
+    public $EmerExt;
     /**
      * @var string|null
      */
-    private $EmerPhone;
+    public $EmerPhone;
     /**
      * @var string|null
      */
-    private $FirstName;
+    public $FirstName;
     /**
      * @var string|null
      */
-    private $FirstBillDate;
+    public $FirstBillDate;
     /**
      * @var string|null
      */
-    private $FreezeEndDate;
+    public $FreezeEndDate;
     /**
      * @var string|null
      */
-    private $FreezeStartDate;
+    public $FreezeStartDate;
     /**
      * @var string|null
      */
-    private $Gender;
+    public $Gender;
     /**
      * @var string|null
      */
-    private $HomeClub;
+    public $HomeClub;
     /**
      * @var string|null
      */
-    private $ID;
+    public $ID;
     /**
      * @var string|null
      */
-    private $LastName;
+    public $LastName;
     /**
      * @var string|null
      */
-    private $Source;
+    public $Source;
     /**
      * @var string|null
      */
-    private $Membership_Type;
+    public $Membership_Type;
     /**
      * @var string|null
      */
-    private $MemberStatus;
+    public $MemberStatus;
     /**
      * @var string|null
      */
-    private $Memo;
+    public $Memo;
     /**
      * @var string|null
      */
-    private $MSDate;
+    public $MSDate;
     /**
      * @var string|null
      */
-    private $Occupation;
+    public $Occupation;
     /**
      * @var string|null
      */
-    private $Phone1;
+    public $Phone1;
     /**
      * @var string|null
      */
-    private $Phone2;
+    public $Phone2;
     /**
      * @var string|null
      */
-    private $Phone3;
+    public $Phone3;
     /**
      * @var int|null
      */
-    private $PG_MemberID;
+    public $PG_MemberID;
     /**
      * @var int|null
      */
-    private $RefAgreementID;
+    public $RefAgreementID;
     /**
      * @var int|null
      */
-    private $RefAgreementPriceID;
+    public $RefAgreementPriceID;
     /**
      * @var string|null
      */
-    private $RESPID;
+    public $RESPID;
     /**
      * @var string|null
      */
-    private $ReDate;
+    public $ReDate;
     /**
      * @var string|null
      */
-    private $Salesperson;
+    public $Salesperson;
     /**
      * @var string|null
      */
-    private $Salesperson2;
+    public $Salesperson2;
     /**
      * @var string|null
      */
-    private $Salesperson3;
+    public $Salesperson3;
     /**
      * @var string|null
      */
-    private $State;
+    public $State;
     /**
      * @var string|null
      */
-    private $TermDate;
+    public $TermDate;
     /**
      * @var string|null
      */
-    private $Zip;
+    public $Zip;
 
     public function __construct(
         array $memberResult
@@ -580,5 +580,373 @@ class MemberModel
     public function getZip(): ?string
     {
         return $this->Zip;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @return array
+     */
+    public function _toArray()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param string|null $Acctnote
+     */
+    public function setAcctnote($Acctnote): void
+    {
+        $this->Acctnote = $Acctnote;
+    }
+
+    /**
+     * @param string|null $Address1
+     */
+    public function setAddress1($Address1): void
+    {
+        $this->Address1 = $Address1;
+    }
+
+    /**
+     * @param string|null $Address2
+     */
+    public function setAddress2($Address2): void
+    {
+        $this->Address2 = $Address2;
+    }
+
+    /**
+     * @param bool|null $AutoBill
+     */
+    public function setAutoBill($AutoBill): void
+    {
+        $this->AutoBill = $AutoBill;
+    }
+
+    /**
+     * @param string|null $Barcode
+     */
+    public function setBarcode($Barcode): void
+    {
+        $this->Barcode = $Barcode;
+    }
+
+    /**
+     * @param string|null $Birthday
+     */
+    public function setBirthday($Birthday): void
+    {
+        $this->Birthday = $Birthday;
+    }
+
+    /**
+     * @param string|null $City
+     */
+    public function setCity($City): void
+    {
+        $this->City = $City;
+    }
+
+    /**
+     * @param string|null $Company
+     */
+    public function setCompany($Company): void
+    {
+        $this->Company = $Company;
+    }
+
+    /**
+     * @param bool|null $DoNotSendTextMessages
+     */
+    public function setDoNotSendTextMessages($DoNotSendTextMessages): void
+    {
+        $this->DoNotSendTextMessages = $DoNotSendTextMessages;
+    }
+
+    /**
+     * @param bool|null $DoNotEmail
+     */
+    public function setDoNotEmail($DoNotEmail): void
+    {
+        $this->DoNotEmail = $DoNotEmail;
+    }
+
+    /**
+     * @param string|null $DriveLic
+     */
+    public function setDriveLic($DriveLic): void
+    {
+        $this->DriveLic = $DriveLic;
+    }
+
+    /**
+     * @param string|null $EnteredDate
+     */
+    public function setEnteredDate($EnteredDate): void
+    {
+        $this->EnteredDate = $EnteredDate;
+    }
+
+    /**
+     * @param string|null $Email
+     */
+    public function setEmail($Email): void
+    {
+        $this->Email = $Email;
+    }
+
+    /**
+     * @param string|null $Emercon
+     */
+    public function setEmercon($Emercon): void
+    {
+        $this->Emercon = $Emercon;
+    }
+
+    /**
+     * @param string|null $EmerExt
+     */
+    public function setEmerExt($EmerExt): void
+    {
+        $this->EmerExt = $EmerExt;
+    }
+
+    /**
+     * @param string|null $EmerPhone
+     */
+    public function setEmerPhone($EmerPhone): void
+    {
+        $this->EmerPhone = $EmerPhone;
+    }
+
+    /**
+     * @param string|null $FirstName
+     */
+    public function setFirstName($FirstName): void
+    {
+        $this->FirstName = $FirstName;
+    }
+
+    /**
+     * @param string|null $FirstBillDate
+     */
+    public function setFirstBillDate($FirstBillDate): void
+    {
+        $this->FirstBillDate = $FirstBillDate;
+    }
+
+    /**
+     * @param string|null $FreezeEndDate
+     */
+    public function setFreezeEndDate($FreezeEndDate): void
+    {
+        $this->FreezeEndDate = $FreezeEndDate;
+    }
+
+    /**
+     * @param string|null $FreezeStartDate
+     */
+    public function setFreezeStartDate($FreezeStartDate): void
+    {
+        $this->FreezeStartDate = $FreezeStartDate;
+    }
+
+    /**
+     * @param string|null $Gender
+     */
+    public function setGender($Gender): void
+    {
+        $this->Gender = $Gender;
+    }
+
+    /**
+     * @param string|null $HomeClub
+     */
+    public function setHomeClub($HomeClub): void
+    {
+        $this->HomeClub = $HomeClub;
+    }
+
+    /**
+     * @param string|null $ID
+     */
+    public function setID($ID): void
+    {
+        $this->ID = $ID;
+    }
+
+    /**
+     * @param string|null $LastName
+     */
+    public function setLastName($LastName): void
+    {
+        $this->LastName = $LastName;
+    }
+
+    /**
+     * @param string|null $Source
+     */
+    public function setSource($Source): void
+    {
+        $this->Source = $Source;
+    }
+
+    /**
+     * @param string|null $Membership_Type
+     */
+    public function setMembershipType($Membership_Type): void
+    {
+        $this->Membership_Type = $Membership_Type;
+    }
+
+    /**
+     * @param string|null $MemberStatus
+     */
+    public function setMemberStatus($MemberStatus): void
+    {
+        $this->MemberStatus = $MemberStatus;
+    }
+
+    /**
+     * @param string|null $Memo
+     */
+    public function setMemo($Memo): void
+    {
+        $this->Memo = $Memo;
+    }
+
+    /**
+     * @param string|null $MSDate
+     */
+    public function setMSDate($MSDate): void
+    {
+        $this->MSDate = $MSDate;
+    }
+
+    /**
+     * @param string|null $Occupation
+     */
+    public function setOccupation($Occupation): void
+    {
+        $this->Occupation = $Occupation;
+    }
+
+    /**
+     * @param string|null $Phone1
+     */
+    public function setPhone1($Phone1): void
+    {
+        $this->Phone1 = $Phone1;
+    }
+
+    /**
+     * @param string|null $Phone2
+     */
+    public function setPhone2($Phone2): void
+    {
+        $this->Phone2 = $Phone2;
+    }
+
+    /**
+     * @param string|null $Phone3
+     */
+    public function setPhone3($Phone3): void
+    {
+        $this->Phone3 = $Phone3;
+    }
+
+    /**
+     * @param int|null $PG_MemberID
+     */
+    public function setPGMemberID($PG_MemberID): void
+    {
+        $this->PG_MemberID = $PG_MemberID;
+    }
+
+    /**
+     * @param int|null $RefAgreementID
+     */
+    public function setRefAgreementID($RefAgreementID): void
+    {
+        $this->RefAgreementID = $RefAgreementID;
+    }
+
+    /**
+     * @param int|null $RefAgreementPriceID
+     */
+    public function setRefAgreementPriceID($RefAgreementPriceID): void
+    {
+        $this->RefAgreementPriceID = $RefAgreementPriceID;
+    }
+
+    /**
+     * @param string|null $RESPID
+     */
+    public function setRESPID($RESPID): void
+    {
+        $this->RESPID = $RESPID;
+    }
+
+    /**
+     * @param string|null $ReDate
+     */
+    public function setReDate($ReDate): void
+    {
+        $this->ReDate = $ReDate;
+    }
+
+    /**
+     * @param string|null $Salesperson
+     */
+    public function setSalesperson($Salesperson): void
+    {
+        $this->Salesperson = $Salesperson;
+    }
+
+    /**
+     * @param string|null $Salesperson2
+     */
+    public function setSalesperson2($Salesperson2): void
+    {
+        $this->Salesperson2 = $Salesperson2;
+    }
+
+    /**
+     * @param string|null $Salesperson3
+     */
+    public function setSalesperson3($Salesperson3): void
+    {
+        $this->Salesperson3 = $Salesperson3;
+    }
+
+    /**
+     * @param string|null $State
+     */
+    public function setState($State): void
+    {
+        $this->State = $State;
+    }
+
+    /**
+     * @param string|null $TermDate
+     */
+    public function setTermDate($TermDate): void
+    {
+        $this->TermDate = $TermDate;
+    }
+
+    /**
+     * @param string|null $Zip
+     */
+    public function setZip($Zip): void
+    {
+        $this->Zip = $Zip;
     }
 }

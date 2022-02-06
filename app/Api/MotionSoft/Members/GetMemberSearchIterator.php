@@ -23,11 +23,15 @@ class GetMemberSearchIterator
 
     public function getMembers(string $memberStatus = 'Active') : Generator
     {
+        //TODO UPDATE THIS PAGE COUNT
         $maxPageCount = 2;
         $pageCount = 0;
 
         while ($pageCount < $maxPageCount) {
+            $pageCount++;
+
             error_log("Member search pulling page {$pageCount}");
+
             $request  = $this->client->getMembers($memberStatus);
             $body = json_decode($request->getBody(), true);
 
@@ -45,7 +49,6 @@ class GetMemberSearchIterator
             foreach ($memberSearchResults as $member) {
                 yield new MemberModel($member);
             }
-            $pageCount++;
         }
         error_log("Member search ended on page {$pageCount}");
 

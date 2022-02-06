@@ -2,7 +2,11 @@
 
 namespace App\Api\MotionSoft;
 
+use App\Api\MotionSoft\Model\MemberModel;
+use DateTime;
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Cookie\SetCookie as CookieParser;
 
@@ -52,6 +56,9 @@ class MotionSoftClient
         $this->client = null;
     }
 
+    /**
+     * @return Client
+     */
     public function getClient(): Client
     {
         if ($this->client) {
@@ -68,7 +75,7 @@ class MotionSoftClient
 
     /**
      * @return ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function authenticate(): ResponseInterface
     {
@@ -87,6 +94,12 @@ class MotionSoftClient
         return $response;
     }
 
+    /**
+     * @param string $memberStatus
+     * @param int|null $pageNumber
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
     public function getMembers(string $memberStatus = 'Active', ?int $pageNumber = null): ResponseInterface
     {
         $this->authenticate();
@@ -106,5 +119,67 @@ class MotionSoftClient
         }
 
         return $this->getClient()->request('GET', $endPoint, $options);
+    }
+
+    /**
+     * @param $memberId
+     * @param DateTime|null $dateStart
+     * @param DateTime|null $dateEnd
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    public function getMemberLedger($memberId, ?DateTime $dateStart = null, ?DateTime $dateEnd = null): ResponseInterface
+    {
+        //MAX ONE YEAR AT A TIME. DEFAULT IS YTD
+
+        $this->authenticate();
+
+        $endPoint = 'Member/GetMemberLedgerByMemberID';
+        $options = [
+            'query' => [
+                'memberId' => $memberId
+            ],
+            'headers' => [
+                'Cookie' => $this->authCookie
+            ]
+        ];
+
+        if ($dateStart) {
+            $options['query']['startSaleDate'] = $dateStart->format('Y-m-d');
+        }
+
+        if ($dateEnd) {
+            $options['query']['endSaleDate'] = $dateEnd->format('Y-m-d');
+        }
+
+        return $this->getClient()->request('GET', $endPoint, $options);
+    }
+
+    /**
+     * Update a whole member or pass an array to update just specific fields
+     * @param MemberModel|null $memberModel
+     * @param array $memberFieldsArray
+     * @return ResponseInterface
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    public function updateMember(?MemberModel $memberModel = null, array $memberFieldsArray = []): ResponseInterface
+    {
+        if (! $memberModel && ! $memberFieldsArray) {
+            throw new Exception('No member information to update.');
+        }
+
+        $this->authenticate();
+
+        $body = $memberModel ? $memberModel->toArray() : $memberFieldsArray;
+
+        $endPoint = 'Member/UpdateMemberDemographic';
+        $options = [
+            'json' => $body,
+            'headers' => [
+                'Cookie' => $this->authCookie
+            ]
+        ];
+        return $this->getClient()->request('PUT', $endPoint, $options);
     }
 }
