@@ -5,6 +5,7 @@ namespace App\Api\MotionSoft\Members;
 use App\Api\MotionSoft\Model\MemberModel;
 use App\Api\MotionSoft\MotionSoftClient;
 use Generator;
+use GuzzleHttp\Exception\GuzzleException;
 
 class GetMemberSearchIterator
 {
@@ -21,10 +22,14 @@ class GetMemberSearchIterator
         $this->client = $client;
     }
 
+    /**
+     * @param string $memberStatus
+     * @return Generator
+     * @throws GuzzleException
+     */
     public function getMembers(string $memberStatus = 'Active') : Generator
     {
-        //TODO UPDATE THIS PAGE COUNT
-        $maxPageCount = 2;
+        $maxPageCount = 500;
         $pageCount = 0;
 
         while ($pageCount < $maxPageCount) {

@@ -4,6 +4,10 @@ namespace App\Api\MotionSoft\Members;
 
 use App\Api\MotionSoft\Model\LedgerEntryModel;
 use App\Api\MotionSoft\MotionSoftClient;
+use DateTime;
+use Exception;
+use Generator;
+use GuzzleHttp\Exception\GuzzleException;
 
 class GetMemberLedgerIterator
 {
@@ -22,10 +26,12 @@ class GetMemberLedgerIterator
 
     /**
      * @param string|int $memberId
-     * @return \Generator|void
-     * @throws \Exception
+     * @param DateTime|null $finalDateToPull
+     * @return Generator|void
+     * @throws GuzzleException
+     * @throws Exception
      */
-    public function getEntireLedgerForMember($memberId)
+    public function getEntireLedgerForMember($memberId, ?DateTime $finalDateToPull = null)
     {
         $maxPageCount = 100;
         $pageCount = 0;
@@ -34,11 +40,12 @@ class GetMemberLedgerIterator
         $nextEndingDate = null;
         $idsRan = [];
         $lastStartingDateRan = null;
+        $payments = 0;
 
         while ($pageCount <= $maxPageCount) {
 
             if ($pageCount === $maxPageCount) {
-                throw new \Exception("Reached maximum page count while fetched ledger for {$memberId}. This is probably a problem.");
+                throw new Exception("Reached maximum page count while fetched ledger for {$memberId}. This is probably a problem.");
             }
 
             $pageCount++;
@@ -64,18 +71,23 @@ class GetMemberLedgerIterator
                 error_log("Member ledger pulling dates {$nextStartingDate->format('Y-m-d')} thru {$nextEndingDate->format('Y-m-d')}");
                 $request = $this->client->getMemberLedger($memberId, $nextStartingDate, $nextEndingDate);
             } else {
-                error_log("Member ledger pulling YTD");
+                if ($finalDateToPull) {
+                    error_log("Member ledger pulling ledger and ending on {$finalDateToPull->format('Y-m-d')}");
+                } else {
+                    error_log("Member ledger pulling YTD");
+                }
                 $request = $this->client->getMemberLedger($memberId);
             }
 
             $body = json_decode($request->getBody(), true);
 
             if (! isset($body['Data'])) {
-                throw new \Exception('No results found');
+                throw new Exception('No results found');
             }
 
             if (! $body['Data']) {
                 error_log("Member search ended on page {$pageCount}");
+                error_log("Total payments made for {$memberId} should be {$payments}");
                 return;
             }
 
@@ -84,16 +96,28 @@ class GetMemberLedgerIterator
             $firstEntry = reset($memberSearchResults);
 
             if (! isset($firstEntry['Saledate']) || ! $firstEntry['Saledate']) {
-                throw new \Exception("Cannot determine the last date to run while fetching ledger. Missing saleDate key.");
+                throw new Exception("Cannot determine the last date to run while fetching ledger. Missing saleDate key.");
             }
 
-            $oldestDate = new \DateTime($firstEntry['Saledate']);
+            $oldestDate = new DateTime($firstEntry['Saledate']);
+
             error_log("Oldest date returned was {$oldestDate->format('Y-m-d')}");
 
+            $memberSearchResults = array_reverse($memberSearchResults);
             foreach ($memberSearchResults as $memberLedgerEntry) {
+
                 if (in_array($memberLedgerEntry['TID'], $idsRan)) {
                     continue; //duplicate check;
                 }
+
+                if (strtolower($memberLedgerEntry['TableName']) === 'p') {
+                    $payments++;
+                }
+
+                if ($memberLedgerEntry['Saledate'] <= $finalDateToPull) {
+                    return; //leave if we have reached the final date we want
+                }
+
                 $idsRan[] = $memberLedgerEntry['TID'];
                 yield new LedgerEntryModel($memberLedgerEntry);
             }
