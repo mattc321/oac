@@ -44,12 +44,17 @@ class MotionSoftSyncService
     {
         $members = $this->getMemberSearchIterator->getMembers($memberStatus);
 
+        $processed = 0;
         foreach ($members as $member) {
+            $processed++;
             if ($hubspotId = $member->getSalesperson3()) {
+                error_log("Member {$member->getID()} syncing withing hubspot contact {$hubspotId}");
                 $this->update->syncHubSpotContactWithMember($hubspotId, $member);
+                error_log("Processed ------------------------------------------> {$processed}");
                 continue;
             }
-
+            error_log("Processed ------------------------------------------> {$processed}");
+            error_log("Member {$member->getID()} creating new in hubspot");
             $this->create->createHubSpotContactFromMember($member);
         }
     }

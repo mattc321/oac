@@ -37,7 +37,7 @@ class GetMemberSearchIterator
 
             error_log("Member search pulling page {$pageCount}");
 
-            $request  = $this->client->getMembers($memberStatus);
+            $request  = $this->client->getMembers($memberStatus, $pageCount);
             $body = json_decode($request->getBody(), true);
 
             if (! isset($body['Data']['Results'])) {

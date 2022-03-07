@@ -122,6 +122,26 @@ class MotionSoftClient
     }
 
     /**
+     * @param int|string $memberId
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    public function getMemberById($memberId)
+    {
+        $this->authenticate();
+
+        $options = [
+            'headers' => [
+                'Cookie' => $this->authCookie
+            ]
+        ];
+
+        $endPoint = "Member/GetMemberByMemberID?memberId={$memberId}";
+
+        return $this->getClient()->request('GET', $endPoint, $options);
+    }
+
+    /**
      * @param $memberId
      * @param DateTime|null $dateStart
      * @param DateTime|null $dateEnd

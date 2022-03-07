@@ -4,7 +4,6 @@ namespace App\Service\SyncService\Helper;
 
 use SevenShores\Hubspot\Http\Client;
 use SevenShores\Hubspot\Resources\Contacts;
-use SevenShores\Hubspot\Resources\Deals;
 use stdClass;
 
 class LastDealRetriever
