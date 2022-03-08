@@ -41,7 +41,7 @@ class GetMemberSearchIterator
             $body = json_decode($request->getBody(), true);
 
             if (! isset($body['Data']['Results'])) {
-                throw new \Exception('No results found');
+                return;
             }
 
             if (! $body['Data']['Results']) {
